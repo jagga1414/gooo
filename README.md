@@ -1,0 +1,2 @@
+# gooo
+go learning
