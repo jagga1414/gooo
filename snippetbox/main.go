@@ -14,8 +14,9 @@ func home(w http.ResponseWriter,r *http.Request){
 func snippetView(w http.ResponseWriter, r *http.Request){
 	viewId,err := strconv.Atoi(r.PathValue("id"))	
 
-	if (err!=nil || viewId<1){
+	if  err!=nil || viewId<1 {
 		http.NotFound(w,r)
+		return
 	}
 	msg := fmt.Sprintf("I am a snippet %d ...",viewId)
 	w.Write([]byte(msg))
@@ -32,6 +33,7 @@ func main(){
 	mux.HandleFunc("/snippet/view/{id}",snippetView)
 
 	mux.HandleFunc("/snippet/create",snippetCreate)
+	
 	log.Print("server started at 4000")
 
 	err := http.ListenAndServe(":4000",mux)
