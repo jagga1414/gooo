@@ -20,7 +20,6 @@ body {
 header, nav, main, footer {
     padding: 2px calc((100% - 800px) / 2) 0;
 }
-
 main {
     margin-top: 54px;
     margin-bottom: 54px;
