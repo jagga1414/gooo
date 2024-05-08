@@ -3,7 +3,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"html/template"
+	"errors"
+	"snippetbox.jagdish.net/internal/models"
 
 )
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -13,20 +14,15 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		// template set. If there's an error, we log the detailed error message, use
 		// the http.Error() function to send an Internal Server Error response to the 
 		// user, and then return from the handler so no subsequent code is executed. 
-		files := []string{"./ui/html/pages/home.tmpl.html","./ui/html/pages/base.tmpl.html","./ui/html/partials/nav.tmpl.html"}
-		ts, err := template.ParseFiles(files...)
-		if err != nil {
-			app.serverError(w,r,err)
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		 	return
-		}
-		// Then we use the Execute() method on the template set to write the
-		// template content as the response body. The last parameter to Execute() // represents any dynamic data that we want to pass in, which for now we'll // leave as nil.
-		err = ts.ExecuteTemplate(w,"base",nil)
-		if err != nil {
-			app.serverError(w,r,err)
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError) 
-		}
+			snippets, err := app.snippets.Latest() 
+			if err != nil {
+				app.serverError(w, r, err)
+				return
+			}
+			// data := templateData{
+			// 	Snippets: snippets,
+			// }
+			app.render(w, r, http.StatusOK, "home.tmpl.html", templateData{ Snippets: snippets,})
 }
 func (app *application)snippetView(w http.ResponseWriter, r *http.Request) { 
 	id, err := strconv.Atoi(r.PathValue("id"))
@@ -34,7 +30,19 @@ func (app *application)snippetView(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
+	snippet, err := app.snippets.Get(id)
+	if err != nil {
+		if errors.Is(err, models.ErrNoRecord) { 
+			http.NotFound(w, r)
+		} else {
+			app.serverError(w, r, err)
+		}
+		return
+	}
+// Write the snippet data as a plain-text HTTP response body.
+	// fmt.Fprintf(w, "%+v", snippet)
+	// fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
+	app.render(w, r, http.StatusOK, "view.tmpl.html", templateData{ Snippet: snippet,})
  }
 
 func (app *application)snippetCreate(w http.ResponseWriter, r *http.Request) { 
@@ -42,6 +50,15 @@ func (app *application)snippetCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application)snippetCreatePost(w http.ResponseWriter, r *http.Request) { 
-	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte("Save a new snippet..."))
+	title := "O snail"
+	content := "O snail\nClimb Mount Fuji,\nBut slowly, slowly!\n\n– Kobayashi Issa" 
+	expires := 7
+	// Pass the data to the SnippetModel.Insert() method, receiving the // ID of the new record back.
+	id, err := app.snippets.Insert(title, content, expires)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+	// Redirect the user to the relevant page for the snippet.
+	http.Redirect(w, r, fmt.Sprintf("/snippet/view/%d", id), http.StatusSeeOther)
 }
