@@ -19,10 +19,9 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 				app.serverError(w, r, err)
 				return
 			}
-			// data := templateData{
-			// 	Snippets: snippets,
-			// }
-			app.render(w, r, http.StatusOK, "home.tmpl.html", templateData{ Snippets: snippets,})
+			data := app.newTemplateData(r)
+			data.Snippets = snippets 
+			app.render(w, r, http.StatusOK, "home.tmpl.html", data)
 }
 func (app *application)snippetView(w http.ResponseWriter, r *http.Request) { 
 	id, err := strconv.Atoi(r.PathValue("id"))
@@ -42,7 +41,9 @@ func (app *application)snippetView(w http.ResponseWriter, r *http.Request) {
 // Write the snippet data as a plain-text HTTP response body.
 	// fmt.Fprintf(w, "%+v", snippet)
 	// fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
-	app.render(w, r, http.StatusOK, "view.tmpl.html", templateData{ Snippet: snippet,})
+	data := app.newTemplateData(r)
+	data.Snippet = snippet
+	app.render(w, r, http.StatusOK, "view.tmpl.html", data)
  }
 
 func (app *application)snippetCreate(w http.ResponseWriter, r *http.Request) { 
