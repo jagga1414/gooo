@@ -3,13 +3,15 @@ package main
 import (
 	// "log"
 	"database/sql"
+	"flag"
+	"html/template"
 	"log/slog"
 	"net/http"
 	"os"
-	"snippetbox.jagdish.net/internal/models"
+
+	"github.com/go-playground/form/v4"
 	_ "github.com/go-sql-driver/mysql"
-	"flag"
-	"html/template"
+	"snippetbox.jagdish.net/internal/models"
 	// "fmt"
 )
 
@@ -17,6 +19,7 @@ type application struct {
 	logger *slog.Logger 
 	snippets *models.SnippetModel
 	templateCache map[string]*template.Template
+	formDecoder *form.Decoder
 }
 
 func main() {
@@ -32,11 +35,14 @@ func main() {
 	templateCache, err := newTemplateCache() 
 	if err != nil {
 		logger.Error(err.Error())
-		os.Exit(1) }
+		os.Exit(1) 
+	}
+	form := form.NewDecoder()
 	app := &application{
 		logger: logger, 
 		snippets: &models.SnippetModel{DB: db},
 		templateCache: templateCache,
+		formDecoder: form,
 	}
 	defer db.Close()
 	app.logger.Info("starting server on","port", *addr)
