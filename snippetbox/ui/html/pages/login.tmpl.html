@@ -1,0 +1,123 @@
+{{define "title"}}Login{{end}}
+{{define "main"}}
+<!-- <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action='/user/login' method='POST' novalidate>
+                        Notice that here we are looping over the NonFieldErrors and displaying them, if any exist
+                        {{range .Form.NonFieldErrors}}
+                        <div class='error'>{{.}}</div> {{end}}
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            {{with .Form.FieldErrors.email}}
+                             <label class='error'>{{.}}</label> {{end}}
+                            <input type='email' name='email' value='{{.Form.Email}}'>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            {{with .Form.FieldErrors.password}}
+                             <label class='error'>{{.}}</label> {{end}}
+                            <input type='password' name='password'>
+                        </div>
+                        <div>
+                            <input type='submit' value='Login'>
+                            <button class="btn btn-danger">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                    <p class="mt-3">
+                        Not registered?
+                        <a href="#">Create an
+                            account</a>
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</div> -->
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <div class="mb-md-5 mt-md-4 pb-5">
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                <p class="text-50 mb-5">Please enter your email id and password!</p>
+                {{range .Form.NonFieldErrors}}
+                        <div class='error'>{{.}}</div> {{end}}
+  
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <label class="form-label" for="typeEmailX">Email</label>
+                  {{with .Form.FieldErrors.email}}
+                  <label class='error'>{{.}}</label> {{end}}
+                  <!-- <input type="email" id="typeEmailX" class="form-control form-control-lg" /> -->
+                  <input type='email' class="form-control" name='email'  value='{{.Form.Email}}'>
+                  
+                </div>
+  
+                <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="typePasswordX">Password</label>
+                    {{with .Form.FieldErrors.password}}
+                    <label class='error'>{{.}}</label> {{end}}
+                  <!-- <input type="password" id="typePasswordX" class="form-control form-control-lg" /> -->
+                    <input type='password' class="form-control" name='password'>
+
+                  
+                </div>
+  
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-secondary px-5" type="submit">Login</button>
+                <a href="/user/signup" class="btn btn-outline-secondary px-5">SignUp</a>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{{end}}
+
+<!-- <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="registrationForm" action="">
+                        <div class="form-group">
+                            <label for="email">
+                                Email
+                            </label>
+                            <input type="email" 
+                                   class="form-control" 
+                                   id="email" 
+                                   placeholder="Email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">
+                                Password
+                            </label>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="password" 
+                                   placeholder="Password"
+                                required />
+                        </div>
+                        <button class="btn btn-danger">
+                            Login
+                        </button>
+                    </form>
+                    <p class="mt-3">
+                        Not registered?
+                        <a href="#">Create an
+                            account</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

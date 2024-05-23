@@ -1,6 +1,65 @@
-{{define "nav"}} 
-<nav>
-    <a href='/'>Home</a> 
-    <a href='/snippet/create'>Create snippet</a>
+{{define "nav"}}
+<!-- <nav>
+    <div>
+        <a href='/'>Home</a>
+        Toggle the link based on authentication status 
+        {{if .IsAuthenticated}}
+            <a href='/snippet/create'>Create snippet</a> 
+        {{end}}
+    </div>
+    <div>
+        Toggle the links based on authentication status
+        {{if .IsAuthenticated}}
+            <form action='/user/logout' method='POST'>
+                <button>Logout</button>
+            </form>
+        {{else}}
+            <a href='/user/signup'>Signup</a> 
+            <a href='/user/login'>Login</a>
+        {{end}}
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Saji Koduvath</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          
+
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+
+        {{if .IsAuthenticated}}
+          <li class="nav-item">
+            <!-- <form action='/user/logout' method='POST'>
+                <button type="button" class="btn">Logout</button>
+            </form> -->
+            <a class="nav-link" href="/user/signup">Logout</a>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <a class="nav-link" href="/user/signup">SignUp</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/login">Login</a>
+          </li>
+        {{end}}
+          
+        </ul>
+      </div>
+    </div>
 </nav>
+
+
 {{end}}
