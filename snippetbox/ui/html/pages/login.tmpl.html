@@ -38,7 +38,7 @@
 </div>
 </div>
 </div> -->
-<section class="vh-100 gradient-custom">
+<!-- <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -56,7 +56,7 @@
                   <label class="form-label" for="typeEmailX">Email</label>
                   {{with .Form.FieldErrors.email}}
                   <label class='error'>{{.}}</label> {{end}}
-                  <!-- <input type="email" id="typeEmailX" class="form-control form-control-lg" /> -->
+                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
                   <input type='email' class="form-control" name='email'  value='{{.Form.Email}}'>
                   
                 </div>
@@ -65,13 +65,13 @@
                     <label class="form-label" for="typePasswordX">Password</label>
                     {{with .Form.FieldErrors.password}}
                     <label class='error'>{{.}}</label> {{end}}
-                  <!-- <input type="password" id="typePasswordX" class="form-control form-control-lg" /> -->
+                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
                     <input type='password' class="form-control" name='password'>
 
                   
                 </div>
   
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-secondary px-5" type="submit">Login</button>
+                <a href="/user/"data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-secondary px-5" type="submit">Login</button>
                 <a href="/user/signup" class="btn btn-outline-secondary px-5">SignUp</a>
             </div>
             </div>
@@ -79,7 +79,35 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
+<div class="container">
+    <div class="row vh-100 align-items-center justify-content-center">
+        <div class="col-sm-8 col-md-6 col-1g-6 col-xl-6 bg-white rounded p-4 shadow">
+            <form action='/user/login' method='POST' >
+                {{range .Form.NonFieldErrors}}
+                <div class='error'>{{.}}</div> {{end}}
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email Address</label>
+                    {{with .Form.FieldErrors.email}}
+                    <label class='error'>{{.}}</label> {{end}}
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value='{{.Form.Email}}'>
+                    <div id="emailHelp" class="form-text">We'll never share your email.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    {{with .Form.FieldErrors.password}}
+                    <label class='error'>{{.}}</label> {{end}}
+                    <input type="password" name="password" class="form-control" id="password" aria-describedby="passwordHelp">
+                    <div id="passwordHelp" class="form-text">Password must be over 6 characters long.</div>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Login</button>
+            </form>
+            <p class="mb-0 text-center">Not registered yet? <a href="/user/signup" class="text-decoration-none">Signup
+        </div>
+
+    </div>
+</div>
+
 {{end}}
 
 <!-- <div class="container mt-5">

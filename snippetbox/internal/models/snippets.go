@@ -73,7 +73,7 @@ return s, nil
 }
 // This will return the 10 most recently created snippets.
 func (m *SnippetModel) Latest() ([]Snippet, error) { 
-	stmt := `SELECT id, title, content, created, expires FROM snippets WHERE expires > UTC_TIMESTAMP() ORDER BY id DESC LIMIT 10`
+	stmt := `SELECT id, title, content, created, expires FROM snippets LIMIT 3`
 // Use the Query() method on the connection pool to execute our
 // SQL statement. This returns a sql.Rows resultset containing the result of // our query.
 	rows, err := m.DB.Query(stmt)

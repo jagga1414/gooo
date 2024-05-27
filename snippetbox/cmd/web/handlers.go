@@ -83,7 +83,7 @@ func (app *application) userLogin(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, http.StatusOK, "login.tmpl.html", data)
 }
 func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
-	var form userSignupForm
+	var form userLoginForm
 	// Parse the form data into the userSignupForm struct.
 	err := app.decodePostForm(r, &form)
 	if err != nil {
@@ -108,7 +108,7 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 			form.AddNonFieldError("Email or password is incorrect")
 			data := app.newTemplateData(r)
 			data.Form = form
-			app.render(w, r, http.StatusUnprocessableEntity, "login.tmpl", data)
+			app.render(w, r, http.StatusUnprocessableEntity, "login.tmpl.html", data)
 		} else {
 			app.serverError(w, r, err)
 		}

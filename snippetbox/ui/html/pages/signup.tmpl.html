@@ -1,6 +1,6 @@
 {{define "title"}}Signup{{end}}
 {{define "main"}}
-<form action='/user/signup' method='POST' novalidate>
+<!-- <form action='/user/signup' method='POST' novalidate>
     <div>
         <label>Name:</label>
         {{with .Form.FieldErrors.name}}
@@ -22,5 +22,40 @@
     <div>
         <input type='submit' value='Signup'>
     </div>
-</form>
+</form> -->
+
+<div class="container">
+    <div class="row vh-100 align-items-center justify-content-center">
+        <div class="col-sm-8 col-md-6 col-1g-6 col-xl-6 bg-white rounded p-4 shadow">
+            <form action='/user/signup' method='POST' >
+                {{range .Form.NonFieldErrors}}
+                <div class='error'>{{.}}</div> {{end}}
+                <div class="mb-4">
+                    <label for="name" class="form-label">Name</label>
+                    {{with .Form.FieldErrors.email}}
+                    <label class='error'>{{.}}</label> {{end}}
+                    <input type="text" name="name" class="form-control" value='{{.Form.Name}}'>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email Address</label>
+                    {{with .Form.FieldErrors.email}}
+                    <label class='error'>{{.}}</label> {{end}}
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value='{{.Form.Email}}'>
+                    <div id="emailHelp" class="form-text">We'll never share your email.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    {{with .Form.FieldErrors.password}}
+                    <label class='error'>{{.}}</label> {{end}}
+                    <input type="password" name="password" class="form-control" id="password" aria-describedby="passwordHelp">
+                    <div id="passwordHelp" class="form-text">Password must be over 6 characters long.</div>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Login</button>
+            </form>
+            <p class="mb-0 text-center">Have acount? <a href="/user/login" class="text-decoration-none">Login
+        </div>
+
+    </div>
+</div>
+
 {{end}}
