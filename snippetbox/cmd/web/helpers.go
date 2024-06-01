@@ -63,11 +63,20 @@ func (app *application) isAuthenticated(r *http.Request) bool {
 	return isAuthenticated
 }
 
+func (app *application) isAdmin(r *http.Request) bool {
+	isAdmin, ok := r.Context().Value("isAdmin").(bool)
+	if !ok {
+		return false
+	}
+	return isAdmin
+}
+
 func (app *application) newTemplateData(r *http.Request) templateData {
 	return templateData{
 		CurrentYear:     time.Now().Year(),
 		Flash:           app.sessionManager.PopString(r.Context(), "flash"),
 		IsAuthenticated: app.isAuthenticated(r),
+		IsAdmin: app.isAdmin(r),
 	}
 }
 
