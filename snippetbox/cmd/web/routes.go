@@ -23,8 +23,11 @@ func (app *application) routes()(http.Handler){
 	protected := dynamic.Append(app.requireAuthentication)
 
 	mux.Handle("POST /user/logout", protected.ThenFunc(app.userLogoutPost))
-	mux.Handle("GET /snippet/create", protected.ThenFunc(app.snippetCreate))
-	mux.Handle("POST /snippet/create", protected.ThenFunc(app.snippetCreatePost))
+
+
+	admin := protected.Append(app.requireAdmin)
+	mux.Handle("GET /snippet/create", admin.ThenFunc(app.snippetCreate))
+	mux.Handle("POST /snippet/create", admin.ThenFunc(app.snippetCreatePost))
 	standard := alice.New(app.recoverPanic, app.logRequest, commonHeaders)
 	return standard.Then(mux)
 }

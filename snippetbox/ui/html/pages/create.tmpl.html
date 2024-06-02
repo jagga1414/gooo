@@ -1,32 +1,5 @@
 {{define "title"}}Create a New Snippet{{end}}
 {{define "main"}}
-<!-- <form action='/snippet/create' method='POST'>
-    <div>
-        <label>Title:</label>
-        {{with .Form.FieldErrors.title}}
-        <label class='error'>{{.}}</label> {{end}}
-        <input type='text' name='title' value='{{.Form.Title}}'>
-    </div>
-    <div>
-        <label>Content:</label>
-        {{with .Form.FieldErrors.content}}
-        <label class='error'>{{.}}</label> {{end}}
-        <textarea name='content'>{{.Form.Content}}</textarea>
-    </div>
-    <div>
-        <label>Delete in:</label>
-        {{with.Form.FieldErrors.expires}}
-        <label class='error'>{{.}}</label> {{end}}
-        
-        <input type='radio' name='expires' value='365' {{if (eq .Form.Expires 365)}}checked{{end}}> One Year
-        <input type='radio' name='expires' value='7' {{if (eq .Form.Expires 7)}}checked{{end}}> One Week
-        <input type='radio' name='expires' value='1' {{if (eq .Form.Expires 1)}}checked{{end}}> One Day
-    </div>
-    <div>
-        <input type='submit' value='Publish snippet'>
-    </div>
-</form> -->
-
 <div class="container">
     <div class="row vh-100 align-items-center justify-content-center">
         <div class="col-sm-8 col-md-6 col-1g-6 col-xl-6 bg-white rounded p-4 shadow">
@@ -46,6 +19,12 @@
                     <label class='error'>{{.}}</label> {{end}}
                     <!-- <input type="text" name="content" class="form-control"> -->
                     <textarea rows="5" class="form-control" name="content" ></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="filename" class="form-label">File Name</label>
+                    {{with .Form.FieldErrors.filename}}
+                    <label class='error'>{{.}}</label> {{end}}
+                    <input type="text" name="filename" class="form-control" id="text" value='{{.Form.FileName}}'>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-success">Post</button>

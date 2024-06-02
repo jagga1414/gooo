@@ -13,7 +13,8 @@ import (
 type snippetCreateForm struct {
 	Title               string `form:"title"`
 	Content             string `form:"content"`
-	Expires             int    `form:"expires"`
+	FileName			string `form:"filename"`
+	// Expires             int    `form:"expires"`
 	validator.Validator `form:"-"`
 }
 
@@ -125,7 +126,7 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 	// 'logged in'.
 	app.sessionManager.Put(r.Context(), "authenticatedUserID", id)
 	// Redirect the user to the create snippet page.
-	http.Redirect(w, r, "/snippet/create", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return
 
 }
@@ -189,9 +190,8 @@ func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 	// Initialize a new createSnippetForm instance and pass it to the template. // Notice how this is also a great opportunity to set any default or
 	// 'initial' values for the form --- here we set the initial value for the // snippet expiry to 365 days.
-	data.Form = snippetCreateForm{
-		Expires: 365,
-	}
+	data.Form = snippetCreateForm{}
+
 	app.render(w, r, http.StatusOK, "create.tmpl.html", data)
 }
 
@@ -219,7 +219,8 @@ func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request
 	form.CheckField(validator.NotBlank(form.Title), "title", "This field cannot be blank")
 	form.CheckField(validator.MaxChars(form.Title, 100), "title", "This field cannot be more than 100 characters long")
 	form.CheckField(validator.NotBlank(form.Content), "content", "This field cannot be blank")
-	form.CheckField(validator.PermittedValue(form.Expires, 1, 7, 365), "expires", "This field must equal 1, 7 or 365")
+	form.CheckField(validator.NotBlank(form.FileName),"filename", "This field cannot be blank")
+	// form.CheckField(validator.PermittedValue(form.Expires, 1, 7, 365), "expires", "This field must equal 1, 7 or 365")
 	// Use the Valid() method to see if any of the checks failed. If they did, // then re-render the template passing in the form in the same way as
 	// before.
 	if !form.Valid() {
@@ -228,7 +229,7 @@ func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request
 		app.render(w, r, http.StatusUnprocessableEntity, "create.tmpl.html", data)
 		return
 	}
-	id, err := app.snippets.Insert(form.Title, form.Content, form.Expires)
+	id, err := app.snippets.Insert(form.Title, form.Content, form.FileName)
 	if err != nil {
 		app.serverError(w, r, err)
 		return
