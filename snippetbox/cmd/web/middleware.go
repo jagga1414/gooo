@@ -9,7 +9,7 @@ import (
 func commonHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Note: This is split across multiple lines for readability. You don't // need to do this in your own code.
-		w.Header().Set("Content-Security-Policy", "default-src 'self' *.jsdelivr.net mdbcdn.b-cdn.net *.fontawesome.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.jsdelivr.net *.fontawesome.com; font-src fonts.gstatic.com *.fontawesome.com")
+		w.Header().Set("Content-Security-Policy", "default-src 'self' *.jsdelivr.net mdbcdn.b-cdn.net *.fontawesome.com; img-src 'self' https://mdbcdn.b-cdn.net data:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.jsdelivr.net *.fontawesome.com; font-src fonts.gstatic.com *.fontawesome.com")
 		w.Header().Set("Referrer-Policy", "origin-when-cross-origin")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.Header().Set("X-Frame-Options", "deny")

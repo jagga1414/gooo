@@ -178,13 +178,29 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	// Write the snippet data as a plain-text HTTP response body.
-	// fmt.Fprintf(w, "%+v", snippet)
-	// fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
-	// flash := app.sessionManager.PopString(r.Context(), "flash")
 	data := app.newTemplateData(r)
 	data.Snippet = snippet
-	app.render(w, r, http.StatusOK, "view.tmpl.html", data)
+	app.renderV(w, r, http.StatusOK, "view.tmpl.html", data)
+
+	// files := []string{
+	// 	"./ui/html/base.tmpl.html",
+	// 	"./ui/html/pages/view.tmpl.html",
+	// 	"./ui/html/blog_pages/me.tmpl.html",
+	// 	"./ui/html/partials/nav.tmpl.html",
+	// 	"./ui/html/partials/footer.tmpl.html",
+	// 	}
+	// 	// Use the template.ParseFiles() function to read the files and store the // templates in a template set. Notice that we use ... to pass the contents // of the files slice as variadic arguments.
+	// 	ts, err := template.New("me").Funcs(functions).ParseFiles(files...)
+	// 	if err != nil {
+	// 		log.Print(err.Error())
+	// 		http.Error(w, "Internal Server Error", http.StatusInternalServerError) 
+	// 		return
+	// 	}
+	// 	// Use the ExecuteTemplate() method to write the content of the "base" // template as the response body.
+	// 	err = ts.ExecuteTemplate(w, "base", data)
+	// 	if err != nil {
+	// 	log.Print(err.Error())
+	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError) }
 }
 func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)

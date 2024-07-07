@@ -23,7 +23,7 @@ type SnippetModel struct {
 }
 // This will insert a new snippet into the database.
 func (m *SnippetModel) Insert(title string, content string, fileName string) (int, error) { 
-	stmt := `INSERT INTO posts (title, content, fileName, created)
+	stmt := `INSERT INTO articles (title, content, fileName, created)
 	 VALUES(?, ?, ?,UTC_TIMESTAMP())`
 // Use the Exec() method on the embedded connection pool to execute the 
 // statement. The first parameter is the SQL statement, followed by the 
@@ -43,7 +43,7 @@ func (m *SnippetModel) Insert(title string, content string, fileName string) (in
 }
 // This will return a specific snippet based on its id.
 func (m *SnippetModel) Get(id int) (Snippet, error) { 
-	stmt := `SELECT id, title, content, fileName, created FROM posts
+	stmt := `SELECT id, title, content, fileName, created FROM articles
 	WHERE id = ?`
 	// Use the QueryRow() method on the connection pool to execute our
 	// SQL statement, passing in the untrusted id variable as the value for the
@@ -74,7 +74,7 @@ return s, nil
 }
 // This will return the 10 most recently created snippets.
 func (m *SnippetModel) Latest() ([]Snippet, error) { 
-	stmt := `SELECT id, title, content, fileName, created FROM posts LIMIT 3`
+	stmt := `SELECT id, title, content, fileName, created FROM articles LIMIT 3`
 // Use the Query() method on the connection pool to execute our
 // SQL statement. This returns a sql.Rows resultset containing the result of // our query.
 	rows, err := m.DB.Query(stmt)

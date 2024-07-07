@@ -17,9 +17,21 @@
 {{end}} -->
 
 <!-- <h2>Latest Snippets</h2>  -->
+
+
 {{if .Snippets}}
-<div class="container my-5">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<div class="container my-3">
+
+    <div class="bg-image" class="w-75">
+        <img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" />
+        <div class="mask text-light d-flex justify-content-center flex-column text-center" style="background-color: rgba(0, 0, 0, 0.6)">
+          <h4>Saji Koduvath</h4>
+          <p class="m-0">paragraph</p>
+        </div>
+    </div>
+    
+  
+    <div class="row row-cols-1 my-3 row-cols-md-2 row-cols-lg-3 g-4">
     {{range .Snippets}}
 
             <div class="col">
