@@ -26,4 +26,26 @@
      </div> 
     </div>
   </div> 
+  
+  <div class="row row-cols-1 my-3 row-cols-md-2 row-cols-lg-3 g-4">
+    {{range .Snippets}}
+
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill" />
+                    <div class="card-body">
+                        <h5 class="card-title">{{.Title}}</h5>
+                        <p class="card-text">
+                            {{.Content}}
+                        </p>
+                        <a href="/snippet/view/{{.ID}}" class="btn btn-outline-secondary">Read</a>
+                    </div>
+
+                    <div class="card-footer">
+                        <small class="text-muted">{{.Created}}</small>
+                    </div>
+                </div>
+            </div>
+    {{end}}
+    </div>
 {{end}}

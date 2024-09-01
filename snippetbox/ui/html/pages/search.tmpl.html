@@ -21,20 +21,21 @@
 
 {{if .Snippets}}
 <div class="container my-3">
-
-    <div class="bg-image" class="w-75">
-        <img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" />
-        <div class="mask text-light d-flex justify-content-center flex-column text-center" style="background-color: rgba(0, 0, 0, 0.6)">
-          <h4>Saji Koduvath</h4>
-          <p class="m-0">paragraph</p>
-        </div>
-    </div>
-    
   
-    <div class="row row-cols-1 my-3 row-cols-md-2 row-cols-lg-3 g-4">
+    <!-- <div class="row row-cols-1 my-3 row-cols-md-2 row-cols-lg-3 g-4"> -->
+    <ul class="list-group list-group-light">
     {{range .Snippets}}
 
-            <div class="col">
+    
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-bold">{{.Title}}</div>
+            <div class="text-muted">{{.Content}}</div>
+          </div>
+          <span class="badge rounded-pill badge-success"><a href="/snippet/view/{{.ID}}" class="btn btn-outline-secondary">Read</a></span>
+        </li>
+
+            <!-- <div class="col">
                 <div class="card h-100">
                     <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Hollywood Sign on The Hill" />
                     <div class="card-body">
@@ -49,9 +50,10 @@
                         <small class="text-muted">{{.Created}}</small>
                     </div>
                 </div>
-            </div>
+            </div> -->
     {{end}}
-    </div>
+    </ul>
+ <!-- </div> -->
 </div>
 {{else}}
     <p>There's nothing to see here... yet!</p>

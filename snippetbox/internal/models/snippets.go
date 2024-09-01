@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"time"
 	"errors"
+	// "fmt"
 )
 // Define a Snippet type to hold the data for an individual snippet. Notice how // the fields of the struct correspond to the fields in our MySQL snippets
 // table?
@@ -104,6 +105,43 @@ func (m *SnippetModel) Latest() ([]Snippet, error) {
 		// Append it to the slice of snippets.
 		snippets = append(snippets, s) 
 	}
+	if err = rows.Err(); err != nil { 
+		return nil, err
+	}
+	return snippets,nil
+}
+
+func (m *SnippetModel) SearchResults(query string, limit int)([]Snippet,error){
+	sqlQuery := `
+	SELECT id, title, content, fileName, created 
+	FROM articles
+	WHERE MATCH(title, content) AGAINST(?) LIMIT ?;`
+	// stmt := fmt.Sprintf("Hi, my name is %s and I'm %d years old.", "Bob", 23)
+	rows, err := m.DB.Query(sqlQuery, query,limit)
+    if err != nil {
+        return nil, err
+    }
+	defer rows.Close()
+	var snippets []Snippet
+
+
+
+
+	for rows.Next() {
+		// Create a pointer to a new zeroed Snippet struct.
+			var s Snippet
+			// Use rows.Scan() to copy the values from each field in the row to the 
+			// new Snippet object that we created. Again, the arguments to row.Scan() 
+			// must be pointers to the place you want to copy the data into, and the 
+			// number of arguments must be exactly the same as the number of
+			// columns returned by your statement.
+			err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.FileName, &s.Created)
+			if err != nil {
+				return nil, err 
+			}
+			// Append it to the slice of snippets.
+			snippets = append(snippets, s) 
+		}
 	if err = rows.Err(); err != nil { 
 		return nil, err
 	}

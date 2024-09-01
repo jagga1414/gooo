@@ -4,3 +4,10 @@
     font-weight: bold;
     display: block;
 }
+body{
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    margin-top: auto;
+}

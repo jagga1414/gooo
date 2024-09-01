@@ -18,6 +18,10 @@ type snippetCreateForm struct {
 	validator.Validator `form:"-"`
 }
 
+type searchQueryForm struct{
+	Query string `form:"query"`
+}
+
 type userSignupForm struct {
 	Name                string `form:"name"`
 	Email               string `form:"email"`
@@ -163,6 +167,30 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	data.Snippets = snippets
 	app.render(w, r, http.StatusOK, "home.tmpl.html", data)
 }
+
+func (app application) search(w http.ResponseWriter, r *http.Request){
+
+	var form searchQueryForm
+	err:= app.decodePostForm(r,&form)
+
+	if err!=nil {
+		app.serverError(w,r,err)
+		return
+	}
+	query:= form.Query
+
+	fmt.Print(query)
+
+
+	snippets,err:=app.snippets.SearchResults(query,20)
+	if err!=nil {
+		app.serverError(w,r,err)
+		return
+	}
+	data := app.newTemplateData(r)
+	data.Snippets = snippets
+	app.render(w, r, http.StatusOK, "search.tmpl.html", data)
+}
 func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil || id < 1 {
@@ -178,8 +206,15 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	query:=snippet.Title
+	snippets,err:=app.snippets.SearchResults(query,3)
+	if err!=nil {
+		app.serverError(w,r,err)
+		return
+	}
 	data := app.newTemplateData(r)
 	data.Snippet = snippet
+	data.Snippets= snippets
 	app.renderV(w, r, http.StatusOK, "view.tmpl.html", data)
 
 	// files := []string{
