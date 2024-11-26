@@ -82,6 +82,11 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (app *application) policyPage(w http.ResponseWriter, r *http.Request){
+	var data templateData
+	app.render(w,r,http.StatusOK,"policies.tmpl.html",data)
+}
+
 func (app *application) userLogin(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 	data.Form = userLoginForm{}

@@ -18,6 +18,7 @@ func (app *application) routes() http.Handler {
 	mux.Handle("GET /user/signup", dynamic.ThenFunc(app.userSignup))
 	mux.Handle("POST /user/signup", dynamic.ThenFunc(app.userSignupPost))
 	mux.Handle("GET /user/login", dynamic.ThenFunc(app.userLogin))
+	mux.Handle("GET /policy", dynamic.ThenFunc(app.policyPage))
 	mux.Handle("POST /user/login", dynamic.ThenFunc(app.userLoginPost))
 	mux.Handle("POST /search", dynamic.ThenFunc(app.search))
 

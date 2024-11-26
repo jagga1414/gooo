@@ -30,7 +30,7 @@ type application struct {
 
 func main() {
 
-	addr := flag.String("addr", ":80", "set your web host")
+	addr := flag.String("addr", ":443", "set your web host")
 	dsn := flag.String("dsn", "web:123456@/snippetbox?parseTime=true", "MySQL data source name")
 
 	flag.Parse()
@@ -72,7 +72,7 @@ func main() {
 	}
 
 	app.logger.Info("starting server on", "port", *addr)
-	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
+	err = srv.ListenAndServeTLS("/etc/letsencrypt/live/indianlawlive.in/fullchain.pem", "/etc/letsencrypt/live/indianlawlive.in/privkey.pem")
 	app.logger.Error(err.Error())
 	os.Exit(1)
 }
